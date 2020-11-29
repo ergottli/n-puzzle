@@ -1,4 +1,7 @@
 from collections import deque
+from queue import PriorityQueue
+
+NODE_COST = 1
 
 
 def print_step(puzzle, score, size):
@@ -43,15 +46,15 @@ def possible_moves(puzzle, size):
 
 
 def a_search(puzzle, res_state, heuristic_func, size):
-    queue = deque()
+    queue = PriorityQueue()
     close_set = {}
     open_set = {}
 
-    queue.append((puzzle, heuristic_func(puzzle), None))  # (current_state, score)
+    queue.put((0, puzzle, heuristic_func(puzzle), None))  # (current_score, (current_state, g, parent))
     #close_set[puzzle] = None  # key = current state, value = parent
 
-    while queue:
-        current_state, current_score, parent = queue.popleft()
+    while not queue.empty():
+        _, current_state, g, parent = queue.get()
         #print_step(current_state, current_score, size)
 
         if current_state in close_set:
@@ -65,23 +68,22 @@ def a_search(puzzle, res_state, heuristic_func, size):
                 path.append(current_state)
                 current_state = close_set[current_state]
             path.reverse()
-            return path
+            return path, len(open_set), len(close_set)
 
         steps = possible_moves(current_state, size)
 
-        current_score += 1
+        next_g = g + NODE_COST
 
         for step in steps:
             if step in close_set:
                 continue
             if step in open_set:
-                score = open_set[step]
-                if score > current_score:
+                g, _ = open_set[step]
+                if g <= next_g:
                     continue
             else:
-                score = heuristic_func(step)
-                open_set[step] = score
-
-            queue.appendleft((step, score, current_state))
+                step_h = heuristic_func(step)
+                open_set[step] = next_g, step_h
+                queue.put((next_g + step_h, step, next_g, current_state))
 
     return False

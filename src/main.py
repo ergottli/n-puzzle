@@ -5,6 +5,9 @@ from heuristics import HEURISTICS, uniform_cost, heuristic_decorator
 from a_search import a_search
 
 
+
+
+
 def print_step(puzzle, score, size):
     i = 0
     print(score)
@@ -28,6 +31,8 @@ if __name__ == '__main__':
     if not result:
         print(False)
     else:
+        result, space, time = result
         for elem in result:
             print_step(elem, 0, size)
+        print(space, time)
 
