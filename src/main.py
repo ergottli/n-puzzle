@@ -1,6 +1,7 @@
 from parser import parse_input
 from result_state import RES_STATE
-from heuristics_alghoritms import HEURISTICS, uniform_cost, heuristic_decorator
+import sys
+from heuristics import HEURISTICS, uniform_cost, heuristic_decorator
 from a_search import a_search
 
 
@@ -24,6 +25,9 @@ if __name__ == '__main__':
 
     result = a_search(puzzle, result_state, heuristic_func, size)
 
-    for elem in result:
-        print_step(elem, 0, size)
+    if not result:
+        print(False)
+    else:
+        for elem in result:
+            print_step(elem, 0, size)
 
