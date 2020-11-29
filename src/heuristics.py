@@ -26,4 +26,4 @@ def manhattan(puzzle, result_state, size):
             res += horizontal_shift + vertical_shift
     return res
 
-HEURISTICS = {'hamming': hamming_distance}
+HEURISTICS = {'hamming': hamming_distance,'manhattan': manhattan}

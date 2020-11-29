@@ -1,7 +1,7 @@
 import argparse
 import sys
 from result_state import RES_STATE
-from heuristics_alghoritms import HEURISTICS
+from heuristics import HEURISTICS
 
 
 def validate_puzzle(puzzle, size):

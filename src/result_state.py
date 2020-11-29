@@ -36,4 +36,4 @@ def spiral_state(puzzle, size):
         counter = (counter + 1) % 16
     return tuple(ans)
 
-RES_STATE = {'back_n_forth': back_n_forth}
+RES_STATE = {'back_n_forth': back_n_forth, 'spiral': spiral_state, 'zero_first': zero_first_state, 'zero_last': zero_last_state}
