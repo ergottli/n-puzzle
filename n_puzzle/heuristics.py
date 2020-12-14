@@ -1,13 +1,16 @@
 import math
 
+
 def heuristic_decorator(func, result_state, size):
 	def heuristic_wrapper(puzzle):
 		return func(puzzle, result_state, size)
 
 	return heuristic_wrapper
 
+
 def uniform_cost(puzzle, result_state, size):
 	return 0
+
 
 def hamming_distance(puzzle, result_state, size):
 	res = 0
@@ -15,6 +18,7 @@ def hamming_distance(puzzle, result_state, size):
 		if puzzle[i] != 0 and puzzle[i] != result_state[i]:
 			res += 1
 	return res
+
 
 def manhattan(puzzle, result_state, size):
 	res = 0
@@ -57,9 +61,5 @@ def linear_conflict(puzzle, result_state, size):
 					res += 2
 	return res
 
-# puzzle = [1, 4, 3, 2, 5, 6, 12, 8, 9, 10, 11, 7, 13, 14, 15, 0]
-# size = 4
-# result_state = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0]
-# print(linear_conflict(puzzle, result_state, size))
 
-HEURISTICS = {'hamming': hamming_distance,'manhattan': manhattan}
+HEURISTICS = {'hamming': hamming_distance,'manhattan': manhattan, "linear_conflict": linear_conflict}
