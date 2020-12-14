@@ -42,4 +42,5 @@ def spiral_state(puzzle, size):
     return tuple(ans)
 
 
-RES_STATE = {'back_n_forth': back_n_forth, 'snail': spiral_state, 'zero_first': zero_first_state, 'zero_last': zero_last_state}
+RES_STATE = {'back_n_forth': back_n_forth, 'snail': spiral_state, 'zero_first': zero_first_state,
+             'zero_last': zero_last_state}

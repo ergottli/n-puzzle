@@ -6,6 +6,7 @@ from heuristics import HEURISTICS, uniform_cost, heuristic_decorator
 class PuzzleSolver:
 
     def __init__(self, args, puzzle, size):
+        self.args = args
         self.puzzle = puzzle
         self.size = size
         self.step_cost = 1
@@ -53,7 +54,8 @@ class PuzzleSolver:
         open_set = {}  # Словарь со всеми открытыми комбинациями. open_set[combination]=[g(n),h(n)].
         close_set = {}  # Словарь со всеми пройденными комбинациями. close_set[combination]=parent.
 
-        queue.put((0 + self.heuristic_func(self.puzzle), 0, self.puzzle, None))  # g(n) + h(n), g(n), current_combination, parent
+        # g(n) + h(n), g(n), current_combination, parent
+        queue.put((0 + self.heuristic_func(self.puzzle), 0, self.puzzle, None))
 
         while not queue.empty():
 
@@ -105,6 +107,23 @@ class PuzzleSolver:
         if not path:
             print("Puzzle not solvable!")
         else:
-            for step in path:
-                print(step)
-        print(f"Space complexity = {space}\nTime complexity = {time}")
+            if self.args.p:
+                self._pretty_print(path)
+            else:
+                for step in path:
+                    print(step)
+        print(f"Space complexity = {space}\nTime complexity = {time}\nSteps = {len(path) - 1}")
+
+    def _pretty_print(self, path):
+        for ind in range(len(path)):
+            print(" " + "-" * (self.size * 2 + 1))
+            i = 0
+            while i < self.size ** 2:
+                print("|", " ".join(map(str, path[ind][i:i + self.size])), "|")
+                i = i + self.size
+            print(" " + "-" * (self.size * 2 + 1))
+            if ind + 1 != len(path):
+                print(" " * self.size, "|", " " * self.size)
+                print(" " * self.size, "v", " " * self.size)
+            else:
+                print()

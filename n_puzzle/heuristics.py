@@ -57,9 +57,9 @@ def linear_conflict(puzzle, result_state, size):
 			if row + 1 < size:
 				cur_res_state = rc[puzzle_matrix[row][col]]
 				next_res_state = rc[puzzle_matrix[row+1][col]]
-				if (cur_res_state[1] == next_res_state[1] and cur_res_state[2] > next_res_state[2]):
+				if cur_res_state[1] == next_res_state[1] and cur_res_state[2] > next_res_state[2]:
 					res += 2
 	return res
 
 
-HEURISTICS = {'hamming': hamming_distance,'manhattan': manhattan, "linear_conflict": linear_conflict}
+HEURISTICS = {'hamming': hamming_distance, 'manhattan': manhattan, "linear_conflict": linear_conflict}
