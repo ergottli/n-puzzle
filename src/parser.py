@@ -45,7 +45,7 @@ def parse_file(data):
 def parse_input():
     parser = argparse.ArgumentParser(description="n-puzzle 21-school Moscow")
 
-    parser.add_argument('-f', help='heuristic function', choices=['manhattan', 'hamming'], default='hamming')
+    parser.add_argument('-f', help='heuristic function', choices=list(HEURISTICS.keys()), default='manhattan')
     parser.add_argument('-u', help='uniform cost', action='store_true')
     parser.add_argument('-g', help='greedy search', action='store_true')
     parser.add_argument('-s', help='solved state', default='snail', choices=list(RES_STATE.keys()))

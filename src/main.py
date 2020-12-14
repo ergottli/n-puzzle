@@ -1,11 +1,7 @@
 from parser import parse_input
 from result_state import RES_STATE
-import sys
 from heuristics import HEURISTICS, uniform_cost, heuristic_decorator
 from a_search import a_search
-
-
-
 
 
 def print_step(puzzle, score, size):
@@ -24,9 +20,12 @@ if __name__ == '__main__':
     heuristic_func = HEURISTICS[args.f]
     if args.u:
         heuristic_func = uniform_cost
+    step_cost = 1
+    if args.g:
+        step_cost = 0
     heuristic_func = heuristic_decorator(heuristic_func, result_state, size)
 
-    result = a_search(puzzle, result_state, heuristic_func, size)
+    result = a_search(puzzle, result_state, heuristic_func, size, step_cost)
 
     if not result:
         print(False)

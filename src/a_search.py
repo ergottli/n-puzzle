@@ -1,8 +1,6 @@
 from collections import deque
 from queue import PriorityQueue
 
-NODE_COST = 1
-
 
 def print_step(puzzle, score, size):
     i = 0
@@ -45,7 +43,7 @@ def possible_moves(puzzle, size):
     return res
 
 
-def a_search(puzzle, res_state, heuristic_func, size):
+def a_search(puzzle, res_state, heuristic_func, size, step_cost):
     queue = PriorityQueue()
     close_set = {}
     open_set = {}
@@ -72,7 +70,7 @@ def a_search(puzzle, res_state, heuristic_func, size):
 
         steps = possible_moves(current_state, size)
 
-        next_g = g + NODE_COST
+        next_g = g + step_cost
 
         for step in steps:
             if step in close_set:
