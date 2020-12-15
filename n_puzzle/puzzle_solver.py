@@ -11,7 +11,7 @@ class PuzzleSolver:
         self.size = size
         self.step_cost = 1
         self.result_state = RES_STATE[args.s](puzzle, size)
-        self.result = []
+        self.result = 0
         if args.g:
             self.step_cost = 0
         if args.u:
@@ -49,7 +49,32 @@ class PuzzleSolver:
     
         return res
 
+    def _is_even_puzzle(self, puzzle, odd_start_correction):
+        incorrect_pairs = odd_start_correction
+        for i in range(len(puzzle)):
+            for e in range(i+1, len(puzzle)):
+                if puzzle[i] > puzzle[e]:
+                    incorrect_pairs += 1
+        return incorrect_pairs % 2 == 0
+
+    def is_solvable(self):
+        odd_start_correction = 0
+        # Если длина стороны четна, добавляем к сумме инверсий стартовой комбинации номер строки с пустой ячейкой.
+        if self.size % 2 == 0:
+            odd_start_correction = (self.puzzle.index(0) + 1) // self.size
+        #  Копируем значения стартовой и финальной комбинации, приводим к типу списка.
+        start_state = list(self.puzzle)
+        finish_state = list(self.result_state)
+        #  Удаляем пустые ячейки. (В подсчете суммы инверсий они не участвуют).
+        start_state.remove(0)
+        finish_state.remove(0)
+        #  Сравниваем четность инверсий стартовой и финальной комбинации.
+        return self._is_even_puzzle(start_state, odd_start_correction) == self._is_even_puzzle(finish_state, 0)
+
     def solve_npuzzle(self):
+        # Проверка на решаемость пазла.
+        if not self.is_solvable():
+            return False
         queue = PriorityQueue()  # Очередь с приоритетом из которой мы забираем следующую комбинацию.
         open_set = {}  # Словарь со всеми открытыми комбинациями. open_set[combination]=[g(n),h(n)].
         close_set = {}  # Словарь со всеми пройденными комбинациями. close_set[combination]=parent.
@@ -96,22 +121,22 @@ class PuzzleSolver:
                 # g(n) + h(n), g(n), current_combination, parent
                 queue.put((next_g + h, next_g, step, current_combination))
 
-        self.result = [False, len(open_set), len(close_set)]
+        self.result = False
         return
 
     def print_result(self):
         if not self.result:
-            print("No result to print")
-            return
-        path, space, time = self.result
-        if not path:
             print("Puzzle not solvable!")
+            return
+        if self.result == 0:
+            print("There is no puzzle!")
+
+        path, space, time = self.result
+        if self.args.p:
+            self._pretty_print(path)
         else:
-            if self.args.p:
-                self._pretty_print(path)
-            else:
-                for step in path:
-                    print(step)
+            for step in path:
+                print(step)
         print(f"Space complexity = {space}\nTime complexity = {time}\nSteps = {len(path) - 1}")
 
     def _pretty_print(self, path):
