@@ -1,5 +1,5 @@
-from parsing import parse_input
-from puzzle_solver import PuzzleSolver
+from n_puzzle import parse_input
+from n_puzzle import PuzzleSolver
 
 
 if __name__ == "__main__":

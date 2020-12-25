@@ -1,5 +1,5 @@
-from heuristics import HEURISTICS
-from result_state import RES_STATE
+from .heuristics import HEURISTICS
+from .result_state import RES_STATE
 import argparse
 import sys
 
@@ -49,7 +49,7 @@ def parse_input():
     parser.add_argument('-u', help='uniform cost', action='store_true')
     parser.add_argument('-p', help='pretty print', action='store_true')
     parser.add_argument('-g', help='greedy search', action='store_true')
-    parser.add_argument('-s', help='solved state', default='zero_first', choices=list(RES_STATE.keys()))
+    parser.add_argument('-s', help='solved state', default='snail', choices=list(RES_STATE.keys()))
     parser.add_argument('-v', help='visualizer', action='store')
     parser.add_argument('file', help='input file', type=argparse.FileType('r'))
 

@@ -1,6 +1,6 @@
 from queue import PriorityQueue
-from result_state import RES_STATE
-from heuristics import HEURISTICS, uniform_cost, heuristic_decorator
+from .result_state import RES_STATE
+from .heuristics import HEURISTICS, uniform_cost, heuristic_decorator
 
 
 class PuzzleSolver:
@@ -131,13 +131,13 @@ class PuzzleSolver:
         if self.result == 0:
             print("There is no puzzle!")
 
-        path, space, time = self.result
+        path, c_time, c_size = self.result
         if self.args.p:
             self._pretty_print(path)
         else:
             for step in path:
                 print(step)
-        print(f"Space complexity = {space}\nTime complexity = {time}\nSteps = {len(path) - 1}")
+        print(f"Complexity in time = {c_time}\nComplexity in size = {c_size}\nSteps = {len(path) - 1}")
 
     def _pretty_print(self, path):
         for ind in range(len(path)):
